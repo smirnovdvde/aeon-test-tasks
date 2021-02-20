@@ -1,6 +1,7 @@
 package com.aeon.payment.service;
 
 import com.aeon.payment.domain.Account;
+import com.aeon.payment.domain.Payments;
 import com.aeon.payment.domain.User;
 import com.aeon.payment.repository.AccountRepository;
 import com.aeon.payment.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Currency;
 import java.util.Optional;
 import java.util.Set;
 
@@ -44,6 +46,12 @@ public class PaymentServiceImpl implements PaymentService{
             throw new RuntimeException("User does not have enough money on his account");
 
         MathContext mathContext = new MathContext(2);
+
+        Payments payments = Payments.builder().summ(new BigDecimal(1.1,mathContext))
+                .account(account)
+                .currency(Currency.getInstance("USD")).build();
+
+        account.getPayments().add(payments);
 
         account.setBalans(new BigDecimal(account.getBalans().doubleValue() - 1.1, mathContext));
 

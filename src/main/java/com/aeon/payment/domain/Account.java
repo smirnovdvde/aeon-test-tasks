@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.Set;
 
 
 @Builder
@@ -19,8 +21,13 @@ public class Account {
     private Integer id;
 
     private BigDecimal balans;
+    
+    private Currency currency;
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    Set<Payments> payments;
 
 }

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Account account = Account.builder().balans(new BigDecimal(8)).build();
+        Account account = Account.builder().balans(new BigDecimal(8)).currency(Currency.getInstance("USD")).build();
         Set<Account> accounts = new HashSet<>();
         accounts.add(account);
         User user = User.builder().username("user1").password(passwordEncoder.encode("user1")).build();
